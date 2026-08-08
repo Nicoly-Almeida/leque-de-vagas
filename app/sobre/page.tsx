@@ -74,10 +74,9 @@ export default function Sobre() {
 
         <div className="sobre__acoes">
           <Botao href="/vagas">Ver as vagas →</Botao>
-          {/* TODO: trocar pela URL real do repositório */}
           <Botao
             tipo="secundario"
-            href="https://github.com"
+            href="https://github.com/Nicoly-Almeida/leque-de-vagas"
             target="_blank"
           >
             Código no GitHub
