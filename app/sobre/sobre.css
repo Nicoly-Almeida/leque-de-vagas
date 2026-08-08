@@ -1,0 +1,85 @@
+/* Página Sobre — Figma 24:314 ("Sobre · 1440")
+   Recuo, empilhamento e tipografia vêm de globals.css
+   (.lv-pagina, .lv-container, .lv-eyebrow, .lv-titulo, .lv-lead, .lv-nota). */
+
+/* Único desvio da escala: aqui o trecho sem gradiente é --text-2, não --text */
+.sobre__titulo {
+  max-width: 760px;
+  color: var(--text-2);
+}
+
+/* O "respiro" de 24px que o Figma coloca antes da trilha */
+.sobre__secao {
+  margin-top: 24px;
+}
+
+/* --- Trilha --- */
+
+.trilha {
+  width: 100%;
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.trilha__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  padding: 18px 20px;
+  background-color: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--raio-card);
+}
+
+.trilha__selo {
+  flex-shrink: 0;
+  padding: 4px 12px;
+  border: 1px solid rgba(169, 140, 224, 0.45);
+  border-radius: var(--raio-pill);
+  font-family: var(--fonte-mono);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: normal;
+  white-space: nowrap;
+  color: var(--purple-light);
+}
+
+.trilha__texto {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.trilha__titulo {
+  font-size: 16.5px;
+  font-weight: 500;
+  line-height: normal;
+  color: var(--text);
+}
+
+.trilha__descricao {
+  font-size: 14.5px;
+  font-weight: 400;
+  line-height: normal;
+  color: var(--text-2);
+}
+
+/* --- Ações --- */
+
+.sobre__acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-top: 22px;
+}
+
+@media (max-width: 640px) {
+  .trilha__item {
+    flex-direction: column;
+    gap: 12px;
+  }
+}

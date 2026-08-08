@@ -1,26 +1,252 @@
 @import "tailwindcss";
 
+/* ==========================================================================
+   Leque de Vagas — tokens do Design System (Figma)
+   Fonte: figma.com/design/26JfXsNuYhG2YShfxER2Xv — "Design System · Telas"
+   ========================================================================== */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: dark;
+
+  /* Superfícies */
+  --bg: #08070e;
+  --surface: #100d1b;
+
+  /* Texto */
+  --text: #f3f0fa;
+  --text-2: #b4aec6;
+  --text-4: #847c9b;
+
+  /* Marca */
+  --magenta: #f24487;
+  /* usado no gradiente do botão primário: garante 4.51:1 com texto branco */
+  --magenta-fundo: #d33b75;
+  --roxo: #7b4fd0;
+  --pink-light: #e88bb8;
+  --purple-light: #a98ce0;
+
+  /* Linhas */
+  --line: rgba(255, 255, 255, 0.09);
+  --line-controle: rgba(255, 255, 255, 0.36);
+
+  /* Raios */
+  --raio-pill: 100px;
+  --raio-card: 16px;
+
+  /* Gradientes */
+  --gradiente-marca: linear-gradient(
+    126.67deg,
+    var(--magenta-fundo) 0%,
+    var(--roxo) 86.957%
+  );
+  --gradiente-texto: linear-gradient(
+    90deg,
+    var(--magenta) 0%,
+    var(--roxo) 100%
+  );
+
+  /* Tipografia */
+  --fonte-sans: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --fonte-mono: var(--font-jetbrains-mono), ui-monospace, "SFMono-Regular",
+    monospace;
+
+  /* Layout — no Figma o corpo tem 170px de recuo em 1440px, o que dá 1100px úteis */
+  --largura-conteudo: 1100px;
+  --gutter: 24px;
+  --altura-cabecalho: 66px;
 }
 
+/* Ponte de tokens para o dia em que o Tailwind entrar no projeto.
+   Não é usada por nenhum componente nosso — todo o estilo daqui é CSS puro.
+   Hoje só atende as classes que sobraram do boilerplate em app/page.tsx. */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-text: var(--text);
+  --color-text-2: var(--text-2);
+  --color-text-4: var(--text-4);
+  --color-magenta: var(--magenta);
+  --color-roxo: var(--roxo);
+  --color-pink-light: var(--pink-light);
+  --color-purple-light: var(--purple-light);
+  --color-line: var(--line);
+  --color-line-controle: var(--line-controle);
+
+  /* mantidos para não quebrar as classes do boilerplate (bg-foreground etc.) */
+  --color-background: var(--bg);
+  --color-foreground: var(--text);
+
+  --font-sans: var(--fonte-sans);
+  --font-mono: var(--fonte-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ==========================================================================
+   Reset — próprio, para o estilo não depender do preflight do Tailwind
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+html {
+  height: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--fonte-sans);
+  -webkit-font-smoothing: antialiased;
 }
+
+/* O <main> ocupa o espaço que sobra abaixo do cabeçalho */
+.lv-principal {
+  flex: 1;
+}
+
+::selection {
+  background-color: rgba(242, 68, 135, 0.32);
+  color: var(--text);
+}
+
+/* Anel de foco do Design System: 2px roxo-claro, afastado 3px (7.18:1) */
+:where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--purple-light);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* ==========================================================================
+   Primitivos compartilhados
+   ========================================================================== */
+
+/* Faixa de conteúdo: 1100px úteis, com respiro nas telas menores */
+.lv-container {
+  width: 100%;
+  max-width: calc(var(--largura-conteudo) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* Casca de página: mesmo recuo vertical e mesmo empilhamento em toda tela.
+   Combine com .lv-container no filho. */
+.lv-pagina {
+  padding-block: 56px 80px;
+}
+
+@media (max-width: 640px) {
+  .lv-pagina {
+    padding-block: 40px 56px;
+  }
+}
+
+.lv-pagina__conteudo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+/* ==========================================================================
+   Tipografia — comum a todas as páginas
+   ========================================================================== */
+
+/* Rótulos em mono rosa: o eyebrow abre a página, o rótulo abre uma seção */
+.lv-eyebrow,
+.lv-rotulo-secao {
+  font-family: var(--fonte-mono);
+  font-weight: 400;
+  line-height: normal;
+  color: var(--pink-light);
+}
+
+.lv-eyebrow {
+  font-size: 12.5px;
+}
+
+.lv-rotulo-secao {
+  font-size: 15px;
+}
+
+/* Título de página. No Figma: 48px na Sobre e 46px nas Vagas — normalizei em 48px,
+   porque 2px não é uma decisão de design. O tracking é sempre -0.03em (-1.44px/48). */
+.lv-titulo {
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+  color: var(--text);
+}
+
+/* O hero da Home é maior e fecha mais o tracking (62px / -2.17px) */
+.lv-titulo--hero {
+  font-size: clamp(38px, 6.5vw, 62px);
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+}
+
+/* Parágrafo de apoio logo abaixo do título */
+.lv-lead {
+  max-width: 760px;
+  font-size: 19px;
+  font-weight: 400;
+  line-height: normal;
+  color: var(--text-2);
+}
+
+/* Nota discreta de rodapé */
+.lv-nota {
+  font-family: var(--fonte-mono);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: normal;
+  color: var(--text-4);
+}
+
+/* Trecho de texto com o gradiente da marca */
+.lv-texto-gradiente {
+  background-image: var(--gradiente-texto);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* O botão (.btn / .btn-primario / .btn-secundario) mora em
+   components/botao/botao.css, junto do componente que o usa. */

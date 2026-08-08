@@ -1,0 +1,63 @@
+/* Botão — Figma 7:14 (2 tipos × 4 estados)
+   O estado Foco vem do anel global definido em globals.css. */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 22px;
+  border: 1px solid transparent;
+  border-radius: var(--raio-pill);
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 500;
+  line-height: normal;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    box-shadow 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease,
+    opacity 0.18s ease;
+}
+
+/* --- Primário --- */
+
+.btn-primario {
+  background-image: var(--gradiente-marca);
+  color: #ffffff;
+}
+
+/* Estilo "Brilho/Botão primário": #E7398299, offset 0/14, raio 40, spread -12 */
+.btn-primario:not(:disabled):not([aria-disabled="true"]):hover {
+  box-shadow: 0 14px 40px -12px rgba(231, 57, 130, 0.6);
+}
+
+/* --- Secundário --- */
+
+.btn-secundario {
+  background-color: transparent;
+  border-color: var(--line-controle);
+  color: var(--text);
+}
+
+.btn-secundario:not(:disabled):not([aria-disabled="true"]):hover {
+  border-color: var(--pink-light);
+  color: var(--pink-light);
+}
+
+/* --- Desabilitado --- */
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* <a> não tem disabled nativo, então o estado vem por aria-disabled */
+.btn[aria-disabled="true"] {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
